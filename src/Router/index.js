@@ -1,6 +1,6 @@
 import HomeView from "@/components/views/HomeView.vue";
 import JobResultView from "@/components/views/JobResultView.vue";
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import JobView from "@/components/views/JobView.vue";
 
 const routes = [
@@ -22,8 +22,15 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
+  scrollBehavior() {
+    return {
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    };
+  },
 });
 
 export default router;
