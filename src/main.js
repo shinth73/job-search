@@ -7,10 +7,14 @@ import "@/index.css";
 
 import App from "@/App.vue";
 import router from "@/Router";
+import { createPinia } from "pinia";
 
 library.add(faSearch);
 
+const pinia = createPinia();
+
 createApp(App)
   .use(router)
+  .use(pinia)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");
