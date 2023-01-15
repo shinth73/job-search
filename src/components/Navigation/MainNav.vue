@@ -57,7 +57,7 @@ export default {
     return {
       company: "Mars Careers",
       menuItems: [
-        { text: "Teams", url: "/" },
+        { text: "Teams", url: "/teams" },
         { text: "Locations", url: "/" },
         { text: "Life at Mars", url: "/" },
         { text: "How we hire", url: "/" },
