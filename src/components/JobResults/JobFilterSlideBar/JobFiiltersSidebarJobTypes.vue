@@ -24,31 +24,20 @@
   </collapsible-accordion>
 </template>
 
-<script>
+<script setup>
+import { computed, ref } from "vue";
+import { useJobsStore } from "@/store/jobs";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/store/user";
 import CollapsibleAccordion from "@/components/Shared/CollapsibleAccordion.vue";
-import { mapActions, mapState } from "pinia";
-import { UNIQUE_JOB_TYPES, useJobsStore } from "@/store/jobs";
-import { ADD_SELECTED_JOB_TYPES, useUserStore } from "@/store/user";
 
-export default {
-  name: "JobFiltersSidebarJobTypes",
-  components: {
-    CollapsibleAccordion,
-  },
-  data() {
-    return {
-      selectedJobTypes: [],
-    };
-  },
-  computed: {
-    ...mapState(useJobsStore, [UNIQUE_JOB_TYPES]),
-  },
-  methods: {
-    ...mapActions(useUserStore, [ADD_SELECTED_JOB_TYPES]),
-    selectJobType() {
-      this.ADD_SELECTED_JOB_TYPES(this.selectedJobTypes);
-      this.$router.push({ name: "JobResults" });
-    },
-  },
+const selectedJobTypes = ref([]);
+const jobStore = useJobsStore();
+const UNIQUE_JOB_TYPES = computed(() => jobStore.UNIQUE_JOB_TYPES);
+const userStore = useUserStore();
+const route = useRouter();
+const selectJobType = () => {
+  userStore.ADD_SELECTED_JOB_TYPES(selectedJobTypes.value);
+  route.push({ name: "JobResults" });
 };
 </script>

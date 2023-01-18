@@ -12,24 +12,13 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "pinia";
-import { FILTERED_JOBS, useJobsStore } from "@/store/jobs";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+<script setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+import { useJobsStore } from "@/store/jobs";
 
-export default {
-  name: "TheSubnav",
-  components: { FontAwesomeIcon },
-  computed: {
-    ...mapState(useJobsStore, [FILTERED_JOBS]),
-    onJobResultPage() {
-      return this.$route.name === "JobResults";
-    },
-  },
-  methods: {
-    FILTERED_JOBS() {
-      return FILTERED_JOBS;
-    },
-  },
-};
+const route = useRoute();
+const onJobResultPage = computed(() => route.name === "JobResults");
+const jobStore = useJobsStore();
+const FILTERED_JOBS = computed(() => jobStore.FILTERED_JOBS);
 </script>
