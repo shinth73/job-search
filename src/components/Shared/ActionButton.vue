@@ -3,32 +3,32 @@
     {{ text }}
   </button>
 </template>
-<script>
-export default {
-  name: "ActionButton",
-  computed: {
-    buttonClass() {
-      return {
-        [this.type]: true,
-      };
+
+<script setup>
+import { computed, toRefs } from "vue";
+
+const props = defineProps({
+  text: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: false,
+    default: "primary",
+    validator(value) {
+      return ["primary", "secondary"].includes(value);
     },
   },
-  props: {
-    text: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: String,
-      required: false,
-      default: "primary",
-      validator(value) {
-        return ["primary", "secondary"].includes(value);
-      },
-    },
-  },
-};
+});
+
+const { type } = toRefs(props);
+
+const buttonClass = computed(() => {
+  return { [type.value]: true };
+});
 </script>
+
 <style>
 button {
   @apply rounded px-5 py-3 font-medium;

@@ -22,38 +22,32 @@
 
       <div class="relative flex h-full flex-1 items-center pl-3">
         <label class="absolute left-0 -top-10">Where?</label>
-        <text-input placeholder="Los Angeles" v-model:model-value="location" />
+        <text-input v-model:model-value="location" placeholder="Los Angeles" />
       </div>
     </div>
     <action-button text="Search" type="secondary" class="rounded-r-3xl" />
   </form>
 </template>
 
-<script>
+<script setup>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import TextInput from "@/components/Shared/TextInput.vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-export default {
-  name: "JobSearchForm",
-  components: { FontAwesomeIcon, ActionButton, TextInput },
-  data() {
-    return {
-      role: "",
-      location: "",
-    };
-  },
-  methods: {
-    searchForJobs() {
-      this.$router.push({
-        name: "JobResults",
-        query: {
-          role: this.role,
-          location: this.location,
-        },
-      });
+const role = ref("");
+const location = ref("");
+
+const router = useRouter();
+const searchForJobs = () => {
+  router.push({
+    name: "JobResults",
+    query: {
+      role: role.value,
+      location: location.value,
     },
-  },
+  });
 };
 </script>
 
