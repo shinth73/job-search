@@ -16,6 +16,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useJobsStore } from "@/store/jobs";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const route = useRoute();
 const onJobResultPage = computed(() => route.name === "JobResults");

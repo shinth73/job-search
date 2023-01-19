@@ -10,21 +10,16 @@
   </ul>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref } from "vue";
 import getSpotLights from "@/api/getSpotLight";
 
-export default {
-  name: "SpotLight",
-  components: {},
-  data() {
-    return {
-      spotLights: [],
-    };
-  },
-  async mounted() {
-    this.spotLights = await getSpotLights();
-  },
-};
-</script>
+const spotlights = ref([]);
 
-<style scoped></style>
+const getSpotlights = async () => {
+  const response = await getSpotLights();
+  spotlights.value = response.data;
+};
+
+onMounted(getSpotlights);
+</script>
