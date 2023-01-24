@@ -29,7 +29,7 @@
           <profile-image v-if="isLoggedIn"></profile-image>
           <action-button
             v-else
-            @click="loginUser"
+            @click="LOGIN_USER"
             text="Sign in"
           ></action-button>
         </div>
@@ -56,7 +56,7 @@ const menuItems = ref([
 ]);
 
 const userStore = useUserStore();
-const loginUser = userStore.loginUser();
+const LOGIN_USER = userStore.LOGIN_USER;
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 
 const headerHeightClass = computed(() => ({

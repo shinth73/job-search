@@ -7,11 +7,8 @@
 
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
       <div class="relative flex h-full flex-1 items-center pr-3">
-        <label class="absolute left-0 -top-10">Role</label>
-        <text-input
-          v-model:model-value="role"
-          placeholder="Software engineer"
-        />
+        <label for="role" class="absolute left-0 -top-10">Role</label>
+        <text-input id="role" v-model="role" placeholder="Software engineer" />
       </div>
 
       <span
@@ -21,26 +18,32 @@
       </span>
 
       <div class="relative flex h-full flex-1 items-center pl-3">
-        <label class="absolute left-0 -top-10">Where?</label>
-        <text-input v-model:model-value="location" placeholder="Los Angeles" />
+        <label for="location" class="absolute left-0 -top-10">Where?</label>
+        <text-input
+          id="location"
+          v-model="location"
+          placeholder="Los Angeles"
+        />
       </div>
     </div>
     <action-button text="Search" type="secondary" class="rounded-r-3xl" />
   </form>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ActionButton from "@/components/Shared/ActionButton.vue";
 import TextInput from "@/components/Shared/TextInput.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-const role = ref("");
-const location = ref("");
+const role = ref<string>("");
+const location = ref<string>("");
 
 const router = useRouter();
 const searchForJobs = () => {
+  console.log(role.value);
+  console.log(location.value);
   router.push({
     name: "JobResults",
     query: {

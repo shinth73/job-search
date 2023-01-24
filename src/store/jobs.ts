@@ -11,6 +11,8 @@ export const FILTERED_JOBS_BY_ORGANIZATIONS = "FILTERED_JOBS_BY_ORGANIZATIONS";
 export const FILTERED_JOBS_BY_JOB_TYPES = "FILTERED_JOBS_BY_JOB_TYPES";
 export const INCLUDE_JOB_BY_ORGANIZATION = "INCLUDE_JOB_BY_ORGANIZATION";
 export const INCLUDE_JOB_BY_JOB_TYPE = "INCLUDE_JOB_BY_JOB_TYPE";
+export const INCLUDE_JOB_BY_JOB_DEGREE = "INCLUDE_JOB_BY_JOB_DEGREE";
+export const INCLUDE_JOB_BY_SKILL = "INCLUDE_JOB_BY_SKILL";
 
 export interface JobsState {
   jobs: Job[];
@@ -46,10 +48,24 @@ export const useJobsStore = defineStore("jobs", {
       if (userStore.selectedJobTypes.length === 0) return true;
       return userStore.selectedJobTypes.includes(job.jobType);
     },
+    [INCLUDE_JOB_BY_JOB_DEGREE]: () => (job: Job) => {
+      const userStore = useUserStore();
+      if (userStore.selectedDegrees.length === 0) return true;
+      return userStore.selectedDegrees.includes(job.degree);
+    },
+    [INCLUDE_JOB_BY_SKILL]: () => (job: Job) => {
+      const userStore = useUserStore();
+      if (userStore.skillsSearchTerm.length === 0) return true;
+      return job.title
+        .toLowerCase()
+        .includes(userStore.skillsSearchTerm.toLowerCase());
+    },
     [FILTERED_JOBS](state): Job[] {
       return state.jobs
         .filter((job) => this.INCLUDE_JOB_BY_ORGANIZATION(job))
-        .filter((job) => this.INCLUDE_JOB_BY_JOB_TYPE(job));
+        .filter((job) => this.INCLUDE_JOB_BY_JOB_TYPE(job))
+        .filter((job) => this.INCLUDE_JOB_BY_JOB_DEGREE(job))
+        .filter((job) => this.INCLUDE_JOB_BY_SKILL(job));
     },
   },
 });

@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="spotlight in spotLights" :key="spotlight.id">
+    <li v-for="spotlight in spotlights" :key="spotlight.id">
       <slot
         :img="spotlight.img"
         :title="spotlight.title"
@@ -10,15 +10,15 @@
   </ul>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { onMounted, ref } from "vue";
+import type { Spotlight } from "@/api/types";
 import getSpotLights from "@/api/getSpotLight";
 
-const spotlights = ref([]);
+const spotlights = ref<Spotlight[]>([]);
 
 const getSpotlights = async () => {
-  const response = await getSpotLights();
-  spotlights.value = response.data;
+  spotlights.value = await getSpotLights<Spotlight[]>();
 };
 
 onMounted(getSpotlights);
